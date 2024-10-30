@@ -172,9 +172,9 @@ def main(cookie_path, locale="DE", country_code="CN"):
         aligned_print('Success', "False")
 
     # Save the HTML response for further analysis
-    with open("TEST.html", "w", encoding='UTF-8') as html_file:
+    with open("Test-Request.html", "w", encoding='UTF-8') as html_file:
         html_file.write(session.get(url_amazon).text)
-        aligned_print('Test HTML Path', "TEST.html")
+        aligned_print('Test-Request Path', "Test-Request.html")
 
     # Save cookies
     with open(cookie_path, 'wb') as file:
@@ -210,4 +210,4 @@ def test_cookie():
 
 if __name__ == "__main__":
     cookie_path = 'cookies.pkl'
-    main(cookie_path, "CO.UK", "CN")
+    main(cookie_path, "ES", "DE")
