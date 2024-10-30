@@ -2,7 +2,7 @@
 
 Python utility for generating customized Amazon session cookies with specified location settings. This tool addresses the challenge that Amazon sets the delivery location based on the user's IP address, making it difficult to access other geographic regions. Supports multiple Amazon domains and delivery countries, enabling seamless configuration of location-specific preferences.
 
-**Caution**: This tool is intended solely to help developers and testers simulate location-specific Amazon settings and is for internal use in development and testing only. It is strictly prohibited to use this tool for illegal activities or for fraudulent purposes, including but not limited to circumventing geo-blocks or abusing Amazon policies. Use of this tool is at your own risk and the developer disclaims any liability for misuse.
+**Caution**: This tool is intended solely to help developers and testers simulate location-specific Amazon settings and is for internal use in development and testing only. It is strictly prohibited to use this tool for illegal activities or for fraudulent purposes, including but not limited to circumventing geo-blocks or abusing Amazon policies. Use of this tool is at your own risk, and the developer disclaims any liability for misuse.
 
 ## Features
 
@@ -94,9 +94,11 @@ This project is licensed under the [MIT License](LICENSE).
 This project is intended solely for educational purposes to demonstrate the technical aspects of handling cookies and geolocation settings on the web. It is not intended to be used for unauthorized scraping, bypassing of security measures, or any actions that violate the Terms of Service of any website, including but not limited to Amazon.com.
 
 **Terms of Service Compliance**  
-Users are responsible for ensuring compliance with the Terms of Service, policies, and legal restrictions of any platform they interact with. Unauthorized data extraction, scraping, or bypassing security mechanisms may violate such terms and could lead to account suspension, IP blocking, or legal action from affected platforms.
+This tool is not affiliated with, endorsed, or approved by Amazon in any way, and users are advised to refer to Amazon's [Terms of Service](https://www.amazon.com/gp/help/customer/display.html?nodeId=GLSBYFE9MGKKQXXM) to ensure compliance with all applicable policies. Users are responsible for ensuring compliance with the Terms of Service, policies, and legal restrictions of any platform they interact with. Unauthorized data extraction, scraping, or bypassing security mechanisms may violate such terms and could lead to account suspension, IP blocking, or legal action from affected platforms.
 
 **Liability**  
-The creator of this project is not responsible for any misuse of this code or any damages resulting from its use. By using or referencing this code, you agree to take full responsibility for your actions and to respect the legal restrictions of any websites you interact with.
+This software is provided 'as is,' without any express or implied warranties. The developer disclaims all liability for any damages arising from its use, including any direct, indirect, or consequential damages. By using or referencing this code, you agree to take full responsibility for your actions and to respect the legal restrictions of any websites you interact with.
 
+**Non-Commercial Use Only**
+This tool is provided for personal, non-commercial use only, and its use in any commercial or public application is not authorized and may violate Amazon’s policies.
 If you need data from Amazon or similar platforms, please consider using official APIs provided by these platforms, such as the Amazon Product Advertising API, to ensure compliance with their policies.
