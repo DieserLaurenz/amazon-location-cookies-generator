@@ -31,7 +31,7 @@ source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
 2. Clone the repository:
 ```bash
 git clone https://github.com/DieserLaurenz/amazon-location-cookies-generator.git
-cd amazon-cookie-generator
+cd amazon-location-cookies-generator
 ```
 
 3. Install required packages:
