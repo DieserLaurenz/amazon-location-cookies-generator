@@ -44,7 +44,7 @@ pip install -r requirements.txt
 Basic usage example:
 
 ```python
-from amazon_cookie_generator import main
+from amazon_cookies_generator import main
 
 # Generate cookies for Italian Amazon store with German delivery location
 cookie_path = 'cookies.pkl'
