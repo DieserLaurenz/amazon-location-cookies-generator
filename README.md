@@ -8,7 +8,8 @@ Python utility for generating customized Amazon session cookies with specified l
 
 - Generate valid Amazon session cookies with location-specific settings
 - Handle CSRF token management automatically
-- Support for multiple Amazon locales (DE, CO.UK, IT, ES, PL, SE, etc.)
+- Support for multiple Amazon locales (e.g.,DE, CO.UK, IT, ES, PL, SE, etc.)
+- Support for multiple delivery countries (e.g., 'DE', 'GB', 'IT', 'ES', 'PL', 'SE')
 - Save and load cookie sessions for reuse
 
 ## Requirements
