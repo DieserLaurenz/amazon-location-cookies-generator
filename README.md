@@ -1,0 +1,1 @@
+# amazon-location-cookies-generator
