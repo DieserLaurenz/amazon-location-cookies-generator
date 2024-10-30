@@ -2,7 +2,7 @@
 
 Python utility for generating customized Amazon session cookies with specified location settings. Supports multiple Amazon domains and delivery countries, enabling seamless configuration of location-specific preferences.
 
-Caution: This tool is intended solely to help developers and testers simulate location-specific Amazon settings and is for internal use in development and testing only. It is strictly prohibited to use this tool for illegal activities or for fraudulent purposes, including but not limited to circumventing geo-blocks or abusing Amazon policies. Use of this tool is at your own risk and the developer disclaims any liability for misuse.
+**Caution**: This tool is intended solely to help developers and testers simulate location-specific Amazon settings and is for internal use in development and testing only. It is strictly prohibited to use this tool for illegal activities or for fraudulent purposes, including but not limited to circumventing geo-blocks or abusing Amazon policies. Use of this tool is at your own risk and the developer disclaims any liability for misuse.
 
 ## Features
 
