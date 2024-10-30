@@ -210,4 +210,4 @@ def test_cookie():
 
 if __name__ == "__main__":
     cookie_path = 'cookies.pkl'
-    main(cookie_path, "ES", "DE")
+    main(cookie_path, "ES", "GB")

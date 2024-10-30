@@ -1,31 +1,37 @@
-# AmazonCookieGenerator
+# AmazonLocationCookiesGenerator
 
-A Python utility for generating and managing Amazon session cookies with location-based settings. This tool addresses the challenge that Amazon sets the delivery location based on the user's IP address, making it difficult to scrape data for other geographic regions. By handling CSRF token management and location preferences, this project enables the use of geolocation proxies to access Amazon data across multiple locales.
+A Python utility for generating Amazon session cookies with desired location settings. This tool addresses the challenge that Amazon sets the delivery location based on the user's IP address, making it difficult to scrape data for other geographic regions. The generated cookies may be used to access Amazon data across multiple locales.
 
 ## Features
 
 - Generate valid Amazon session cookies with location-specific settings
 - Handle CSRF token management automatically
-- Support for multiple Amazon locales (DE, UK, US, etc.)
+- Support for multiple Amazon locales (DE, CO.UK, IT, ES, PL, SE, etc.)
 - Save and load cookie sessions for reuse
-- TLS client implementation for secure connections
 
 ## Requirements
 
 ```
 beautifulsoup4
 tls-client
+typing_extensions
 ```
 
 ## Installation
 
-1. Clone the repository:
+1. Create a new virtual environment:
+```bash
+python -m venv venv
+source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
+```
+
+2. Clone the repository:
 ```bash
 git clone https://github.com/yourusername/amazon-cookie-generator.git
 cd amazon-cookie-generator
 ```
 
-2. Install required packages:
+3. Install required packages:
 ```bash
 pip install -r requirements.txt
 ```
@@ -37,42 +43,47 @@ Basic usage example:
 ```python
 from amazon_cookie_generator import main
 
-# Generate cookies for German Amazon store
-cookie_path = 'data/cookies/cookies.pkl'
-cookies = main(cookie_path, locale="DE")
+# Generate cookies for Italian Amazon store with German delivery location
+cookie_path = 'cookies.pkl'
+cookies = main(cookie_path, locale="IT", country_code="DE")
 ```
 
-Configuration options:
+Alternatively, you can deserialize the saved cookies from the `cookies.pkl` file:
+
 ```python
-config = CookieGeneratorConfig(
-    locale='DE',          # Country locale (e.g., 'DE', 'UK', 'US')
-    zip_code=10115,       # Default ZIP code for location
-    country_code="DE"     # Country code for location settings
-)
+import pickle
+import tls_client
+
+cookie_path = "cookies.pkl"
+
+with open(cookie_path, 'rb') as file:
+    cookies = pickle.load(file)
+
+session = tls_client.Session()
+
+session.cookies.update(cookies)
+
+# Now you can use the cookies in other requests
 ```
 
 ## Configuration
 
-The tool supports various configuration options through the `CookieGeneratorConfig` class:
+- `locale`: Set the Amazon top-level domain (default: 'DE')
+  - The 'locale' parameter should be the Amazon top-level domain (e.g., 'DE', 'CO.UK', 'IT', 'ES', 'PL', 'SE')
 
-- `locale`: Set the Amazon store locale (default: 'DE')
-- `client_identifier`: Set the browser client type
-- `zip_code`: Set the default ZIP code
-- `country_code`: Set the country code
+- `country_code`: Set the country code for delivery location
+  - The 'country_code' parameter should be the delivery location country code (e.g., 'DE', 'GB', 'IT', 'ES', 'PL', 'SE')
 
-## Error Handling
 
-The tool includes custom exceptions for various error cases:
-- `InvalidRequestMethodException`
-- `RequestErrorException`
-- `TokenElementNotFoundException`
-- `DataModalNotFoundException`
-- `AntiCsrfTokenNotFoundException`
-- `CsrfTokenNotFoundException`
+- Note: These two parameters may not always match, as the top-level domains and country codes can be different
+
+
+- For a full list of valid country codes, please refer to the [Country Code reference](https://countrycode.org/).
+
 
 ## License
 
-[Choose an appropriate license]
+This project is licensed under the [MIT License](LICENSE).
 
 ## Disclaimer
 
