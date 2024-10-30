@@ -194,20 +194,6 @@ def main(cookie_path, locale="DE", country_code="CN"):
     return session.cookies
 
 
-def test_cookie():
-    with open('cookies.pkl', 'rb') as file:
-        data = pickle.load(file)
-
-    session2 = tls_client.Session()
-
-    session2.cookies.update(data)
-
-    # Now you can use the session with the loaded cookies
-    response = session2.get("https://www.amazon.CO.UK")
-
-    print(response.text)
-
-
 if __name__ == "__main__":
     cookie_path = 'cookies.pkl'
     main(cookie_path, "ES", "GB")
