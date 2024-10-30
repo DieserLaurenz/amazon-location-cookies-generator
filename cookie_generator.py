@@ -7,11 +7,11 @@ import traceback
 from bs4 import BeautifulSoup
 
 class CookieGeneratorConfig:
-    def __init__(self, locale='DE'):
+    def __init__(self, locale='DE', country_code='DE'):
         self.locale = locale
         self.client_identifier = "chrome_112"
         self.zip_code = 10115
-        self.country_code = "DE"
+        self.country_code = country_code
         self.update_urls()
 
     def update_urls(self):
@@ -53,6 +53,8 @@ class CsrfTokenNotFoundException(Exception):
     "Raised when a csrf token could not be found"
     pass
 
+def aligned_print(label, value, width=20):
+    print(f"{label + ':':<{width}}{value}")
 
 def send_request(url, session, method="GET", headers=None, params=None, json=None):
     if method == "GET":
@@ -65,7 +67,7 @@ def send_request(url, session, method="GET", headers=None, params=None, json=Non
     if response.status_code == 200:
         return response, session
     else:
-        print(f"Fehler beim Abrufen der Webseite: Statuscode {response.status_code}")
+        aligned_print(f"Fehler beim Abrufen der Webseite: Statuscode {response.status_code}")
         raise RequestErrorException
 
 
@@ -95,9 +97,9 @@ def extract_csrf_token(response_text):
         raise CsrfTokenNotFoundException
 
 
-def main(cookie_path, locale="DE"):
+def main(cookie_path, locale="DE", country_code="CN"):
 
-    config = CookieGeneratorConfig(locale=locale)
+    config = CookieGeneratorConfig(locale=locale, country_code=country_code)
 
     url_amazon = config.url_amazon
     url_glow_rendered_address_selections = config.url_glow_rendered_address_selections
@@ -112,7 +114,7 @@ def main(cookie_path, locale="DE"):
 
     anti_csrf_token = extract_anti_csrf_token(html_content)
 
-    print(f"Anti-CSRF-Token: {anti_csrf_token}")
+    aligned_print("Anti-CSRF-Token", anti_csrf_token)
 
     headers = {'anti-csrftoken-a2z': anti_csrf_token}
 
@@ -127,49 +129,59 @@ def main(cookie_path, locale="DE"):
                                                                 "GET", params=params, headers=headers)
 
     csrf_token = extract_csrf_token(rendered_address_selection_response.text)
-    print("CSRF-TOKEN: ", csrf_token)
+    aligned_print("CSRF-TOKEN ", csrf_token)
 
     headers['anti-csrftoken-a2z'] = csrf_token
 
     params = {'actionSource': 'glow'}
 
-    if locale == "DE":
-        # Eigentlich unnötig, da es mit Country Code auch funktioniert.
-        json_data = {
-            'locationType': 'LOCATION_INPUT',
-            'zipCode': zip_code,
-            'deviceType': 'web',
-            'storeContext': 'generic',
-            'pageType': 'Gateway',
-            'actionSource': 'glow',
-        }
+    json_data = {
+        'locationType': 'COUNTRY',
+        'district': country_code,
+        'countryCode': country_code,
+        'deviceType': 'web',
+        'storeContext': 'generic',
+        'pageType': 'Gateway',
+        'actionSource': 'glow',
+    }
 
-    else:
 
-        json_data = {
-            'locationType': 'COUNTRY',
-            'district': country_code,
-            'countryCode': country_code,
-            'deviceType': 'web',
-            'storeContext': 'generic',
-            'pageType': 'Gateway',
-            'actionSource': 'glow',
-        }
+    """
+    
+    # If zip_code is necessary
+    json_data = {
+        'locationType': 'LOCATION_INPUT',
+        'zipCode': zip_code,
+        'deviceType': 'web',
+        'storeContext': 'generic',
+        'pageType': 'Gateway',
+        'actionSource': 'glow',
+    }
+    
+    """
+
 
     glow_address_change_response, session = send_request(url_glow_address_change, session, "POST", headers=headers,
                                                          params=params, json=json_data)
 
-    print(glow_address_change_response.status_code)
-    print(glow_address_change_response.text)
+    aligned_print('HTTP-Status-Code', glow_address_change_response.status_code)
+    aligned_print('HTTP-Response', glow_address_change_response.text)
+
+    if glow_address_change_response.json().get("isAddressUpdated") == 1:
+        aligned_print('Success', "True")
+    else:
+        aligned_print('Success', "False")
 
 
     # Speichern der HTML-Antwort für weitere Analysen
     with open("TEST.html", "w", encoding='UTF-8') as html_file:
         html_file.write(session.get(url_amazon).text)
+        aligned_print('Test-HTML-Path', "TEST.html")
 
     # Cookies speichern
     with open(cookie_path, 'wb') as file:
         pickle.dump(session.cookies, file)
+        aligned_print('Cookies-Path', cookie_path)
 
     """
     # Neue Session erstellen
@@ -186,4 +198,4 @@ def main(cookie_path, locale="DE"):
 
 if __name__ == "__main__":
     cookie_path = 'cookies.pkl'
-    main(cookie_path, "DE")
+    main(cookie_path, "CO.UK", "CN")
