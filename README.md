@@ -1,6 +1,8 @@
 # AmazonLocationCookiesGenerator
 
-A Python utility for generating Amazon session cookies with desired location settings. This tool addresses the challenge that Amazon sets the delivery location based on the user's IP address, making it difficult to scrape data for other geographic regions. The generated cookies may be used to access Amazon data across multiple locales.
+Python utility for generating customized Amazon session cookies with specified location settings. Supports multiple Amazon domains and delivery countries, enabling seamless configuration of location-specific preferences.
+
+Caution: This tool is intended solely to help developers and testers simulate location-specific Amazon settings and is for internal use in development and testing only. It is strictly prohibited to use this tool for illegal activities or for fraudulent purposes, including but not limited to circumventing geo-blocks or abusing Amazon policies. Use of this tool is at your own risk and the developer disclaims any liability for misuse.
 
 ## Features
 
