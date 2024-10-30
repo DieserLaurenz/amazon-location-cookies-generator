@@ -30,7 +30,7 @@ source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
 
 2. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/amazon-cookie-generator.git
+git clone https://github.com/DieserLaurenz/amazon-cookie-generator.git
 cd amazon-cookie-generator
 ```
 
