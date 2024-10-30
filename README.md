@@ -85,6 +85,15 @@ session.cookies.update(cookies)
 
 This project is licensed under the [MIT License](LICENSE).
 
-## Disclaimer
+# Disclaimer
 
-This tool is for educational and research purposes only. Make sure to comply with Amazon's terms of service and robots.txt when using this tool. Avoid excessive or malicious scraping, as it may result in account restrictions or legal actions.
+**Educational Use Only**  
+This project is intended solely for educational purposes to demonstrate the technical aspects of handling cookies and geolocation settings on the web. It is not intended to be used for unauthorized scraping, bypassing of security measures, or any actions that violate the Terms of Service of any website, including but not limited to Amazon.com.
+
+**Terms of Service Compliance**  
+Users are responsible for ensuring compliance with the Terms of Service, policies, and legal restrictions of any platform they interact with. Unauthorized data extraction, scraping, or bypassing security mechanisms may violate such terms and could lead to account suspension, IP blocking, or legal action from affected platforms.
+
+**Liability**  
+The creator of this project is not responsible for any misuse of this code or any damages resulting from its use. By using or referencing this code, you agree to take full responsibility for your actions and to respect the legal restrictions of any websites you interact with.
+
+If you need data from Amazon or similar platforms, please consider using official APIs provided by these platforms, such as the Amazon Product Advertising API, to ensure compliance with their policies.
