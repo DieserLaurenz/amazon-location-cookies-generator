@@ -3,8 +3,8 @@ import pickle
 import re
 
 import tls_client
-import traceback
 from bs4 import BeautifulSoup
+
 
 class CookieGeneratorConfig:
     def __init__(self, locale='DE', country_code='DE'):
@@ -30,7 +30,7 @@ class InvalidRequestMethodException(Exception):
 
 
 class RequestErrorException(Exception):
-    "Raised when a request error occured"
+    "Raised when a request error occurred"
     pass
 
 
@@ -45,16 +45,18 @@ class DataModalNotFoundException(Exception):
 
 
 class AntiCsrfTokenNotFoundException(Exception):
-    "Raised when an anti csrf token could not be found"
+    "Raised when an anti-CSRF token could not be found"
     pass
 
 
 class CsrfTokenNotFoundException(Exception):
-    "Raised when a csrf token could not be found"
+    "Raised when a CSRF token could not be found"
     pass
+
 
 def aligned_print(label, value, width=20):
     print(f"{label + ':':<{width}}{value}")
+
 
 def send_request(url, session, method="GET", headers=None, params=None, json=None):
     if method == "GET":
@@ -67,7 +69,7 @@ def send_request(url, session, method="GET", headers=None, params=None, json=Non
     if response.status_code == 200:
         return response, session
     else:
-        aligned_print(f"Fehler beim Abrufen der Webseite: Statuscode {response.status_code}")
+        aligned_print(f"Error retrieving the webpage: Status code {response.status_code}")
         raise RequestErrorException
 
 
@@ -98,7 +100,6 @@ def extract_csrf_token(response_text):
 
 
 def main(cookie_path, locale="DE", country_code="CN"):
-
     config = CookieGeneratorConfig(locale=locale, country_code=country_code)
 
     url_amazon = config.url_amazon
@@ -145,9 +146,8 @@ def main(cookie_path, locale="DE", country_code="CN"):
         'actionSource': 'glow',
     }
 
-
     """
-    
+
     # If zip_code is necessary
     json_data = {
         'locationType': 'LOCATION_INPUT',
@@ -157,43 +157,55 @@ def main(cookie_path, locale="DE", country_code="CN"):
         'pageType': 'Gateway',
         'actionSource': 'glow',
     }
-    
-    """
 
+    """
 
     glow_address_change_response, session = send_request(url_glow_address_change, session, "POST", headers=headers,
                                                          params=params, json=json_data)
 
-    aligned_print('HTTP-Status-Code', glow_address_change_response.status_code)
-    aligned_print('HTTP-Response', glow_address_change_response.text)
+    aligned_print('HTTP Status Code', glow_address_change_response.status_code)
+    aligned_print('HTTP Response', glow_address_change_response.text)
 
     if glow_address_change_response.json().get("isAddressUpdated") == 1:
         aligned_print('Success', "True")
     else:
         aligned_print('Success', "False")
 
-
-    # Speichern der HTML-Antwort für weitere Analysen
+    # Save the HTML response for further analysis
     with open("TEST.html", "w", encoding='UTF-8') as html_file:
         html_file.write(session.get(url_amazon).text)
-        aligned_print('Test-HTML-Path', "TEST.html")
+        aligned_print('Test HTML Path', "TEST.html")
 
-    # Cookies speichern
+    # Save cookies
     with open(cookie_path, 'wb') as file:
         pickle.dump(session.cookies, file)
-        aligned_print('Cookies-Path', cookie_path)
+        aligned_print('Cookies Path', cookie_path)
 
     """
-    # Neue Session erstellen
+    # Create a new session
     session2 = tls_client.Session()
 
     session2.cookies.update(session.cookies)
 
-    # Jetzt kannst du die Session mit den geladenen Cookies verwenden
+    # Now you can use the session with the loaded cookies
     response = session2.get(url_amazon)
     """
 
     return session.cookies
+
+
+def test_cookie():
+    with open('cookies.pkl', 'rb') as file:
+        data = pickle.load(file)
+
+    session2 = tls_client.Session()
+
+    session2.cookies.update(data)
+
+    # Now you can use the session with the loaded cookies
+    response = session2.get("https://www.amazon.CO.UK")
+
+    print(response.text)
 
 
 if __name__ == "__main__":
